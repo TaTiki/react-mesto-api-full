@@ -16,7 +16,11 @@ function getUserById(res, _id) {
       if (!user) {
         return Promise.reject(new MestoError(404, `Пользователь с id ${_id} не найден!`));
       }
-      return res.send({ data: user });
+      return res.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+      }).send({ data: user });
     }).catch((err) => handleError(res, err));
 }
 
@@ -47,6 +51,11 @@ module.exports.createUser = (req, res) => {
     })
       .then((user) => {
         user.set('password', undefined);
+        res.set({
+          'Access-Control-Allow-Origin': ['*'],
+          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        })
         res.send({ data: user });
       }))
     .catch((err) => handleError(res, err));

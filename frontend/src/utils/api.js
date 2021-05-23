@@ -109,9 +109,9 @@ class Api {
 
 export { Api };
 export default new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-20',
+  baseUrl: 'http://server:3000',
   headers: {
-    authorization: '6577e49f-15b9-4798-93b6-109a6b031458',
+    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFhODU0NmM0N2M4NjhhYjdiMDRlYWQiLCJpYXQiOjE2MjE3ODc5OTEsImV4cCI6MTYyMjM5Mjc5MX0.BX2btrgVvDYvT4Jb_HtBy1bAEEsf85c5ajkJgBfoqFk',
   },
   timeout: 20000,
 });

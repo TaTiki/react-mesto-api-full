@@ -79,7 +79,7 @@ class Auth{
 
 export { Auth };
 export default new Auth({
-  baseUrl: 'https://auth.nomoreparties.co',
+  baseUrl: 'http://localhost:5000',
   timeout: 20000,
 });
 

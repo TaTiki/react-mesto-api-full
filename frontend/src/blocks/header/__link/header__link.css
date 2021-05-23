@@ -1,0 +1,13 @@
+.header__link {
+color:#fff;
+margin-left: 20px;
+text-decoration: none;
+font-size: 18px;
+background-color: black;
+border: 0;
+font-family: "Inter";
+}
+
+.header__link:hover {
+  color: gray;
+}

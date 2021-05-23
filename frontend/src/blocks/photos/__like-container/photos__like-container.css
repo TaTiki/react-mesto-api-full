@@ -1,0 +1,6 @@
+.photos__like-container {
+  position: absolute;
+  left: 240px;
+  max-width: 22px;
+  text-align: center;
+}

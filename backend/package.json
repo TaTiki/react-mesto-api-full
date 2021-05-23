@@ -1,0 +1,29 @@
+{
+  "name": "express-mesto",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx node app.js",
+    "dev": "npx nodemon app.js",
+    "lint": "npx eslint"
+  },
+  "keywords": [],
+  "author": "Tatiana Kirsanova",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "*"
+  },
+  "dependencies": {
+    "bcrypt": "*",
+    "celebrate": "^14.0.0",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "validator": "*"
+  }
+}

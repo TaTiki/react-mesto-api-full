@@ -1,0 +1,6 @@
+.photos__info {
+  display: flex;
+  width: 282px;
+  justify-content: space-between;
+  height: 79px;
+}

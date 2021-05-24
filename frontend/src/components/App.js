@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
 import Main from "./Main";
-import api from "../utils/api";
+//import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
@@ -12,8 +12,9 @@ import { Switch, Route, withRouter, useLocation } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import ProtectedRoute from "./ProtectedRoute";
-import auth from '../utils/auth';
+//import auth from '../utils/auth';
 import InfoTooltip from "./InfoTooltip";
+import api from '../utils/apiV2';
 
 function App({history}) {
 
@@ -59,6 +60,8 @@ function App({history}) {
             history.push('/sign-in');
           }
         });
+        break;
+      default:
     }
   },[pathname] )
 
@@ -79,7 +82,7 @@ function App({history}) {
     if(email) {
       
       Promise.all([
-        api.getUser(),
+        api.getAuthUser(),
         api.getInitialCards(),
       ]).then(([user, cards]) => {
         setCurrentUser(user);
@@ -89,14 +92,14 @@ function App({history}) {
   }, [email])
 
   const handleTokenCheck = (JWT) => {
-      auth.getAuthUser(JWT).then((email) => {
-        setEmail(email);
+      api.getAuthUser(JWT).then((user) => {
+        setEmail(user.email);
         history.push('/');
       }).catch(console.log)
   }
 
   const handleSignUp = (email, password) => {
-    auth.signup(email, password).then(()=> {
+    api.signup(email, password).then(()=> {
       setSignSuccess(true)
       history.push('/sign-in')
     })
@@ -109,7 +112,7 @@ function App({history}) {
   }
 
   const handleSignIn = (email, password) => {
-    auth.signin(email, password).then((token) => {
+    api.signin(email, password).then((token) => {
 
       setSignSuccess(true)
       setJWT(token);

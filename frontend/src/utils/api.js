@@ -109,9 +109,9 @@ class Api {
 
 export { Api };
 export default new Api({
-  baseUrl: 'http://server:3000',
+  baseUrl: 'http://localhost:5000',
   headers: {
-    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFhODU0NmM0N2M4NjhhYjdiMDRlYWQiLCJpYXQiOjE2MjE3ODc5OTEsImV4cCI6MTYyMjM5Mjc5MX0.BX2btrgVvDYvT4Jb_HtBy1bAEEsf85c5ajkJgBfoqFk',
+    authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGFiMjMwYWY1ZDJlNzAwMWRlYTBmYWYiLCJpYXQiOjE2MjE4Mjg1MTMsImV4cCI6MTYyMjQzMzMxM30.twhk8N_wq_1Al2xDebccHeY-Z-gwDwgN80XuM-TkcNg',
   },
   timeout: 20000,
 });

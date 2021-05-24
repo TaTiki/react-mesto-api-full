@@ -16,11 +16,7 @@ function getUserById(res, _id) {
       if (!user) {
         return Promise.reject(new MestoError(404, `Пользователь с id ${_id} не найден!`));
       }
-      return res.set({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
-        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-      }).send({ data: user });
+      return res.send({ data: user });
     }).catch((err) => handleError(res, err));
 }
 
@@ -29,7 +25,7 @@ module.exports.getUser = (req, res) => {
 };
 
 module.exports.getMe = (req, res) => {
-  getUserById(res, req.user);
+  getUserById(res, req.user._id);
 };
 
 module.exports.createUser = (req, res) => {
@@ -51,11 +47,6 @@ module.exports.createUser = (req, res) => {
     })
       .then((user) => {
         user.set('password', undefined);
-        res.set({
-          'Access-Control-Allow-Origin': ['*'],
-          'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE, PATCH',
-          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
-        })
         res.send({ data: user });
       }))
     .catch((err) => handleError(res, err));
@@ -63,8 +54,11 @@ module.exports.createUser = (req, res) => {
 
 module.exports.updateMe = (req, res) => {
   const { name, about } = req.body;
-  User.findOneAndUpdate(req.user, { name, about }, { new: true, runValidators: true })
+  console.log(req.user);
+  const { _id } = req.user;
+  User.findOneAndUpdate({ _id }, { name, about }, { new: true, runValidators: true })
     .then((user) => {
+      console.log(user);
       if (!user) {
         return Promise.reject(new MestoError(404, 'Такого профиля нет в базе данных!'));
       }
@@ -74,7 +68,8 @@ module.exports.updateMe = (req, res) => {
 
 module.exports.updateMyAvatar = (req, res) => {
   const { avatar } = req.body;
-  User.findOneAndUpdate(req.user, { avatar }, { new: true, runValidators: true })
+  const { _id } = req.user;
+  User.findOneAndUpdate({ _id }, { avatar }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
         return Promise.reject(new MestoError(404, 'Такого профиля нет в базе данных!'));

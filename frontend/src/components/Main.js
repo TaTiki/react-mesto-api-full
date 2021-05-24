@@ -4,7 +4,7 @@ import Card from './Card';
 
 export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, cards, onCardLike, onCardDelete }) {
   const user = useContext(CurrentUserContext);
- 
+  console.log(cards);
   return (
     <main>
       <section className="profile">

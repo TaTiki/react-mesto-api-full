@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-var cors = require('cors');
+const cors = require('cors');
 const { celebrate, Joi, errors } = require('celebrate');
 const { createUser, login } = require('./controllers/users');
 const MestoError = require('./errors/MestoError');
@@ -8,7 +8,7 @@ const { urlValidator } = require('./errors/customValidationError');
 const auth = require('./middleware/auth');
 const handleError = require('./middleware/handleError');
 
-const { ADDR = 'http://localhost:3000', DB = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { DB = 'mongodb://localhost:27017/mestodb' } = process.env;
 const app = express();
 
 app.use(express.json());
@@ -43,5 +43,5 @@ app.use('/', (req, res) => handleError(res, new MestoError(404, `Не можем
 app.use(errors());
 
 app.listen(3000, () => {
-  console.log(ADDR);
+  console.log('Server started');
 });

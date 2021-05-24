@@ -29,7 +29,11 @@ class Auth{
     })
   }
 
-  getAuthUser(token) {
+  getAuthUser() {
+    const token = localStorage.getItem('JWT')
+    if (!token) {
+      return Promise.reject('Please login first')
+    }
     return this._request('GET',
     `${this._baseUrl}/users/me`,
     undefined, {

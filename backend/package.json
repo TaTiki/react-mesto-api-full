@@ -23,8 +23,10 @@
     "celebrate": "^14.0.0",
     "cors": "^2.8.5",
     "express": "*",
+    "express-winston": "^4.1.0",
     "jsonwebtoken": "*",
     "mongoose": "*",
-    "validator": "*"
+    "validator": "*",
+    "winston": "^3.3.3"
   }
 }

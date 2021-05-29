@@ -1,34 +1,35 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const handleError = require('../middleware/handleError');
 const MestoError = require('../errors/MestoError');
 
-module.exports.getUsers = (_, res) => {
+const { NODE_ENV, JWT_SECRET } = process.env;
+
+module.exports.getUsers = (_, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(() => handleError(res, new MestoError()));
+    .catch(next);
 };
 
-function getUserById(res, _id) {
+function getUserById(res, _id, next) {
   User.findById(_id)
     .then((user) => {
       if (!user) {
         return Promise.reject(new MestoError(404, `Пользователь с id ${_id} не найден!`));
       }
       return res.send({ data: user });
-    }).catch((err) => handleError(res, err));
+    }).catch(next);
 }
 
-module.exports.getUser = (req, res) => {
-  getUserById(res, req.params.userId);
+module.exports.getUser = (req, res, next) => {
+  getUserById(res, req.params.userId, next);
 };
 
-module.exports.getMe = (req, res) => {
-  getUserById(res, req.user._id);
+module.exports.getMe = (req, res, next) => {
+  getUserById(res, req.user._id, next);
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (req, res, next) => {
   const {
     email,
     password,
@@ -49,24 +50,22 @@ module.exports.createUser = (req, res) => {
         user.set('password', undefined);
         res.send({ data: user });
       }))
-    .catch((err) => handleError(res, err));
+    .catch(next);
 };
 
-module.exports.updateMe = (req, res) => {
+module.exports.updateMe = (req, res, next) => {
   const { name, about } = req.body;
-  console.log(req.user);
   const { _id } = req.user;
   User.findOneAndUpdate({ _id }, { name, about }, { new: true, runValidators: true })
     .then((user) => {
-      console.log(user);
       if (!user) {
         return Promise.reject(new MestoError(404, 'Такого профиля нет в базе данных!'));
       }
       return res.send({ data: user });
-    }).catch((err) => handleError(res, err));
+    }).catch(next);
 };
 
-module.exports.updateMyAvatar = (req, res) => {
+module.exports.updateMyAvatar = (req, res, next) => {
   const { avatar } = req.body;
   const { _id } = req.user;
   User.findOneAndUpdate({ _id }, { avatar }, { new: true, runValidators: true })
@@ -75,10 +74,10 @@ module.exports.updateMyAvatar = (req, res) => {
         return Promise.reject(new MestoError(404, 'Такого профиля нет в базе данных!'));
       }
       return res.send({ data: user });
-    }).catch((err) => handleError(res, err));
+    }).catch(next);
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
   User.findOne({ email }).select('+password')
     .then((user) => {
@@ -94,8 +93,10 @@ module.exports.login = (req, res) => {
         });
     })
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+        { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch((err) => handleError(res, err));
+    .catch(next);
 };

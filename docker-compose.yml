@@ -3,7 +3,10 @@ version: "3.6"
 services:
   mongodb:
     image: "mongo"
-    
+    ports:
+      - 27017:27017
+    volumes:
+      - /var/log/mongo-data:/data/db
 
   server:
     build: 
@@ -11,16 +14,11 @@ services:
     depends_on:
       - mongodb
     environment:
-      - DB=mongodb://mongodb:27017/mestodb
+      - DB
+      - NODE_ENV
+      - JWT_SECRET
     ports:
       - 5000:3000
-
-  frontend:
-    build: 
-      context: ./frontend
-    depends_on: 
-      - server
-    ports:
-      - 80:3000
-
-
+    restart: unless-stopped
+    volumes:
+      - /var/log/mesto-server:/app/logs

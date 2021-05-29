@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const MestoError = require('../errors/MestoError');
 
-module.exports = (res, err) => {
+module.exports = (err, req, res, next) => {
   if (err instanceof MestoError) {
     switch (err.code) {
       case 500:

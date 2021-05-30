@@ -25,7 +25,6 @@ class Api {
     .then( resp => resp.json())
     .then((data)=> {
       if(data.token) {
-        console.log(data.token);
         localStorage.setItem('JWT', data.token);
         return data.token;
       }
@@ -38,7 +37,6 @@ class Api {
     if (!token) {
       return Promise.reject('Please login first')
     }
-    console.log(token);
     return this._request('GET',
     `${this._baseUrl}/users/me`,
     {
@@ -57,7 +55,6 @@ class Api {
     if (!token) {
       return Promise.reject('Please login first')
     }
-    console.log(token);
     return this._request(
       'PATCH',
       `${this._baseUrl}/users/me`,
@@ -177,7 +174,6 @@ class Api {
       if (resp.ok){
         return resp;
       }
-      resp.json().then(console.log)
       return Promise.reject(resp.status);
     });
   }

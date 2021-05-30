@@ -75,7 +75,6 @@ class Auth{
       if (resp.ok){
         return resp;
       }
-      resp.json().then(console.log)
       return Promise.reject(resp.status);
     });
   }

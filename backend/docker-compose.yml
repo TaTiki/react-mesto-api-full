@@ -3,10 +3,8 @@ version: "3.6"
 services:
   mongodb:
     image: "mongo"
-    ports:
-      - 27017:27017
     volumes:
-      - /var/log/mongo-data:/data/db
+      - mongo_data:/data/db
 
   server:
     build: 
@@ -18,7 +16,10 @@ services:
       - NODE_ENV
       - JWT_SECRET
     ports:
-      - 5000:3000
+      - "127.0.0.1:5000:3000"
     restart: unless-stopped
     volumes:
       - /var/log/mesto-server:/app/logs
+
+volumes:
+  mongo_data:

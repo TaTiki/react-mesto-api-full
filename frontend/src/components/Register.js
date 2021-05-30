@@ -6,14 +6,7 @@
 
    const handleSubmit = (evt) => {
      evt.preventDefault();
-     //console.log(email.current.value);
-     //console.log(password.current.value);
-     console.log(onSubmit);
      onSubmit(email.current.value, password.current.value)
-     /*.then((data) => {
-       console.log(data)
-       history.push('/sign-in')
-     }).catch(console.log);*/
    }
    return (
 

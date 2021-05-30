@@ -185,6 +185,6 @@ class Api {
 
 export { Api };
 export default new Api({
-  baseUrl: process.env.BASEURL ? process.env.BASEURL : 'http://localhost:5000',
+  baseUrl: process.env.NODE_ENV === 'production' ? "https://api.mata.hari.nomoredomains.icu" : 'http://localhost:5000',
   timeout: 20000,
 });

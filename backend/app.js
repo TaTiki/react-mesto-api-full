@@ -9,7 +9,7 @@ const auth = require('./middleware/auth');
 const { requestLogger, errorLogger } = require('./middleware/logger');
 const errorMiddleware = require('./middleware/handleError');
 
-const { DB = 'mongodb://localhost:27017/mestodb' } = process.env;
+const { DB = 'mongodb://localhost:27017/mestodb', NODE_ENV, JWT_SECRET } = process.env;
 const app = express();
 
 app.use(express.json());
@@ -50,5 +50,8 @@ app.use(errors());
 app.use(errorMiddleware);
 
 app.listen(3000, () => {
+  console.log(DB);
+  console.log(NODE_ENV);
+  console.log(JWT_SECRET);
   console.log('Server started');
 });

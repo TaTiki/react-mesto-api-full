@@ -3,6 +3,7 @@ const MestoError = require('../errors/MestoError');
 
 module.exports.getCards = (_, res, next) => {
   Card.find({})
+    .sort('-createdAt')
     .populate('likes')
     .then((cards) => res.send({ data: cards }))
     .catch(next);
